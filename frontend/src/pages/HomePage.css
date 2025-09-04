@@ -1,0 +1,265 @@
+/* --- Global Home Page Layout --- */
+.home-page {
+    background-color: #f0f0f0; 
+    color: #1a1a1a;
+    font-family: 'Roboto', sans-serif;
+}
+
+.main-container {
+    padding: 20px 40px;
+}
+
+.content-area {
+    display: flex;
+    gap: 40px;
+    margin-top: 20px;
+}
+
+/* --- Navbar Component --- */
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 40px;
+    background-color: #ffffff;
+    border-bottom: 1px solid #ddd;
+}
+
+.nav-left, .nav-right, .nav-center {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 24px;
+    font-weight: 600;
+    text-decoration: none;
+    color: #1a1a1a;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #555;
+    font-size: 18px;
+    font-weight: 600;
+    padding-bottom: 5px;
+}
+
+.nav-links a.active {
+    color: #1a1a1a;
+    border-bottom: 3px solid #1a1a1a;
+}
+
+.profile-icon {
+    font-size: 28px; /* Placeholder */
+}
+
+/* --- Search Input Component --- */
+.search-container {
+    display: flex;
+    align-items: center;
+    background-color: #f0f0f0;
+    border-radius: 20px;
+    padding: 5px 15px;
+    border: 1px solid #ddd;
+}
+
+.search-container input {
+    border: none;
+    background: transparent;
+    outline: none;
+    padding: 5px;
+    font-size: 14px;
+    width: 250px;
+}
+
+.search-container .search-icon {
+    font-size: 18px; /* Placeholder */
+}
+
+/* --- Create Project Button --- */
+.create-project-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background-color: #1a1a1a;
+    color: #ffffff;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 25px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.create-project-btn:hover {
+    background-color: #333;
+}
+
+.create-project-btn .plus-icon {
+    font-size: 22px;
+    border: 2px solid #fff;
+    border-radius: 5px;
+    padding: 0 4px;
+}
+
+/* --- Feed Components --- */
+.feed-column {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.feed-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 5px;
+}
+
+.sort-control {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #555;
+    cursor: pointer;
+}
+
+.feed-toggle button {
+    border: 1px solid #ccc;
+    background-color: #f0f0f0;
+    padding: 5px 15px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.feed-toggle button:first-child {
+    border-radius: 15px 0 0 15px;
+}
+.feed-toggle button:last-child {
+    border-radius: 0 15px 15px 0;
+}
+
+.feed-toggle button.active {
+    background-color: #555;
+    color: #fff;
+    border-color: #555;
+}
+
+.feed-content {
+    background-color: #e9e9e9;
+    padding: 20px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.feed-title {
+    text-align: center;
+}
+
+.feed-title h3 {
+    margin: 0 0 5px 0;
+    font-family: 'Montserrat', sans-serif;
+}
+.feed-title p {
+    margin: 0;
+    font-size: 14px;
+    color: #666;
+}
+
+.more-btn {
+    background-color: #d1d1d1;
+    border: none;
+    border-radius: 20px;
+    padding: 8px 30px;
+    font-weight: 600;
+    cursor: pointer;
+    align-self: center;
+}
+
+/* --- Project & Activity Preview Components (Cards) --- */
+.preview-card {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 15px;
+    border: 1px solid #ddd;
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.project-image {
+    width: 150px;
+    height: 90px;
+    background-color: #ccc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #888;
+    border-radius: 5px;
+    flex-shrink: 0;
+}
+
+.card-details {
+    flex-grow: 1;
+}
+
+.card-info, .card-status {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.card-status {
+    margin-top: 15px;
+    font-size: 14px;
+    color: #555;
+}
+
+.checkout-status {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+/* Activity Preview Specifics */
+.activity-card-header {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 10px;
+}
+.activity-user-icon {
+    font-size: 32px; /* Placeholder */
+}
+.activity-user-info p {
+    margin: 0;
+    line-height: 1.4;
+}
+.activity-user-info .user-name {
+    font-weight: 700;
+}
+.activity-user-info .role-info {
+    font-size: 13px;
+    color: #666;
+}
+
+.activity-card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end; /* Align items to the bottom */
+    font-size: 12px;
+    color: #666;
+    margin-top: 10px;
+}
