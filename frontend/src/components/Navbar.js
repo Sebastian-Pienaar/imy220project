@@ -1,14 +1,6 @@
-
 import React from 'react';
-
 import { NavLink } from 'react-router-dom';
-
-const SearchInput = () => (
-    <div className="search-container">
-        <input type="text" placeholder="search for projects, friends, etc" />
-        <span className="search-icon">⚲</span>
-    </div>
-);
+import SearchInput from './SearchInput';
 
 const Navbar = () => {
   return (

@@ -1,5 +1,6 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const webpack = require('webpack');
 
 module.exports = {
   mode: 'development',
@@ -20,7 +21,7 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        use: ['style-loader', 'css-loader'],
+        use: ['style-loader', 'css-loader', 'postcss-loader'],
       },
     ],
   },
@@ -28,11 +29,23 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: './frontend/public/index.html',
     }),
+    // Inject a minimal process.env so client code can safely read API_BASE.
+    new webpack.DefinePlugin({
+      'process.env.API_BASE': JSON.stringify(process.env.API_BASE || '/api'),
+    }),
   ],
+  // No explicit process polyfill needed; client code guards access.
   devServer: {
     port: 3000,
     open: true,
     
-    historyApiFallback: true, 
+    historyApiFallback: true,
+    proxy: [
+      {
+        context: ['/api'],
+        target: 'http://localhost:8000',
+        changeOrigin: true,
+      }
+    ]
   },
 };

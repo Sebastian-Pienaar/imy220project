@@ -1,49 +1,36 @@
-import React, { useState } from 'react'; 
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useProjects } from '../context/ProjectsContext';
 
+// 1. The component accepts 'onSwitchToLogin' as a prop.
 const SignUpForm = ({ onSwitchToLogin }) => {
   const navigate = useNavigate();
-
+  const { signup } = useProjects();
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [error, setError] = useState(''); 
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
     if (password !== confirmPassword) {
-      setError('Passwords do not match');
-      return; 
+      setError('Passwords do not match!');
+      return;
     }
-
-
-    
     setError('');
-
+    // ... (rest of the submit logic) ...
     const formData = new FormData(event.target);
     const fullName = formData.get('full-name');
     const email = formData.get('email');
-
+    // Derive username from email prefix if user didn't enter separate username field (not in form) => slug
+    const username = (email.split('@')[0] || fullName.split(' ')[0]).toLowerCase().replace(/[^a-z0-9-]/g,'-');
     try {
-      const response = await fetch('http://localhost:8000/api/signup', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ fullName, email, password }), 
-      });
-
-      const data = await response.json();
-      console.log('Response from server:', data);
-
-      if (data.success) {
-        console.log('New user created, storing token:', data.token);
-        navigate('/home');
-      } else {
-        alert(data.message);
-      }
-    } catch (error) {
-      console.error('Failed to connect to the server:', error);
-      alert('Could not connect to the server. Please try again later.');
-    }
+      setLoading(true);
+      const user = await signup({ username, name: fullName, email, password });
+      navigate(`/profile/${user.username}`);
+    } catch(e){
+      setError(e.message);
+    } finally { setLoading(false); }
   };
 
   return (
@@ -51,48 +38,22 @@ const SignUpForm = ({ onSwitchToLogin }) => {
       <div className="form-content">
         <h2>Register here</h2>
         <form onSubmit={handleSubmit}>
-      
-          <div className="form-group">
-            <label htmlFor="full-name">full name</label>
-            <input type="text" id="full-name" name="full-name" required />
-          </div>
-          <div className="form-group">
-            <label htmlFor="email">email</label>
-            <input type="email" id="email" name="email" required />
-          </div>
-          <div className="form-group">
-            <label htmlFor="password">password</label>
-        
-            <input 
-              type="password" 
-              id="password" 
-              name="password" 
-              value={password} 
-              onChange={(e) => setPassword(e.target.value)} 
-              required 
-            />
-          </div>
-      
-          <div className="form-group">
-            <label htmlFor="confirm-password">confirm password</label>
-            <input 
-              type="password" 
-              id="confirm-password" 
-              name="confirm-password"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              required
-            />
-          </div>
-          
-         
+          {/* ... (form inputs) ... */}
+          <div className="form-group"><label htmlFor="full-name">full name</label><input type="text" id="full-name" name="full-name" required /></div>
+          <div className="form-group"><label htmlFor="email">email</label><input type="email" id="email" name="email" required /></div>
+          <div className="form-group"><label htmlFor="password">password</label><input type="password" id="password" name="password" value={password} onChange={(e) => setPassword(e.target.value)} required /></div>
+          <div className="form-group"><label htmlFor="confirm-password">confirm password</label><input type="password" id="confirm-password" name="confirm-password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} required /></div>
           {error && <p className="validation-error">{error}</p>}
-
-          <button type="submit" className="register-btn">register</button>
+          <button type="submit" className="register-btn" disabled={loading}>{loading ? '...' : 'register'}</button>
         </form>
-        
         <div className="form-switcher">
-          <p>Already have an account?{' '}<button type="button" onClick={onSwitchToLogin}>Log In</button></p>
+          <p>
+            Already have an account?{' '}
+            {/* 2. This button correctly calls the function from the parent. */}
+            <button type="button" onClick={onSwitchToLogin}>
+              Log In
+            </button>
+          </p>
         </div>
       </div>
     </div>

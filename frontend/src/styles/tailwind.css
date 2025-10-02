@@ -1,0 +1,241 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom base layer for typography, body background, fonts */
+@layer base {
+  html, body { @apply bg-bg text-ink font-body; }
+  body { @apply bg-grid-dark bg-grid; }
+  h1,h2,h3,h4 { @apply font-heading font-semibold tracking-tight; }
+}
+
+/* Recreating key legacy styles from App.css as transitional component classes */
+@layer components {
+  .app-divider { @apply h-px w-full bg-accent my-10; }
+  .card-form { @apply relative bg-surface text-black p-10 rounded-[30px] shadow-card border-2 border-accent; }
+  .card-form-inner { @apply relative z-10; }
+  .btn-accent-outline { @apply inline-block px-6 py-2 font-semibold rounded-full border-2 border-accent text-accent hover:bg-accent hover:text-white transition; }
+  .form-label { @apply block mb-2 font-bold text-sm; }
+  .form-input { @apply w-full px-4 py-3 rounded-full bg-white text-black outline-none; }
+  .logo-text { @apply font-heading text-5xl font-semibold m-0; }
+  .tagline { @apply text-base text-ink-muted; }
+  /* Legacy App.css (Splash) mapped to Tailwind */
+  .header { @apply text-center mb-[50px]; }
+  .logo { @apply flex justify-center items-center gap-4; }
+  .logo-icon { @apply bg-white rounded-full p-2 h-10 w-10 flex items-center justify-center font-mono text-2xl text-[#1a1a1a]; }
+  .logo-icon .bug { @apply text-accent; }
+  .divider { @apply border-0 h-px bg-accent my-10; }
+  .main-content { @apply flex justify-around items-start gap-10 flex-wrap; }
+  .how-it-works { @apply flex-1 min-w-[300px]; }
+  .how-it-works h2 { @apply font-heading text-4xl mb-8; }
+  .step { @apply mb-6 pl-5 border-l-2 border-accent; }
+  .step h3 { @apply text-lg font-bold mb-1; }
+  .step p { @apply text-base text-ink-muted m-0; }
+  .registration-container { @apply flex-1 min-w-[300px] max-w-[450px]; }
+  .registration-form { @apply bg-surface p-10 relative text-[#1a1a1a] border-4 border-accent rounded-[30px_30px_30px_80px/30px_30px_30px_60px]; }
+  .registration-form h2 { @apply font-heading text-center text-2xl mt-0 mb-8; }
+  .form-group { @apply mb-5; }
+  .register-btn { @apply block mx-auto mt-5 px-8 py-2 border-2 border-accent rounded-full bg-surface text-accent font-bold text-base transition; }
+  .register-btn:hover { @apply bg-accent text-white; }
+  .footer { @apply text-center mt-[50px]; }
+  .footer-nav a { @apply text-ink-muted no-underline mx-4 text-base; }
+  .footer-nav a:hover { @apply text-accent; }
+  .form-switcher { @apply text-center mt-5 text-sm; }
+  .form-switcher p { @apply m-0 text-ink-subtle; }
+  .form-switcher button { @apply bg-transparent border-0 p-0 text-accent font-bold cursor-pointer text-sm; }
+  .form-switcher button:hover { @apply underline; }
+  /* Primary button shared */
+  .primary-btn { @apply inline-flex items-center justify-center font-semibold rounded-full bg-[#1a1a1a] text-white px-5 py-3 text-sm hover:bg-[#333] disabled:opacity-50 disabled:cursor-not-allowed transition; }
+  /* HomePage.css */
+  .home-page { @apply bg-[#f0f0f0] text-[#1a1a1a] font-body; }
+  .main-container { @apply px-10 py-5; }
+  .content-area { @apply flex gap-10 mt-5; }
+  .navbar { @apply flex items-center justify-between py-[15px] px-10 bg-white border-b border-[#ddd]; }
+  .nav-left,.nav-right,.nav-center { @apply flex items-center gap-5; }
+  .nav-logo { @apply flex items-center gap-2 font-heading text-2xl font-semibold no-underline text-[#1a1a1a]; }
+  .nav-links a { @apply no-underline text-[#555] text-lg font-semibold pb-1; }
+  .nav-links a.active { @apply text-[#1a1a1a] border-b-[3px] border-[#1a1a1a]; }
+  .search-container { @apply flex items-center bg-[#f0f0f0] rounded-full py-1 px-4 border border-[#ddd]; }
+  .search-container input { @apply border-0 bg-transparent outline-none p-1 text-sm w-[250px]; }
+  .create-project-btn { @apply flex items-center gap-2 bg-accent text-white border-0 px-4 py-2 rounded-lg text-sm font-semibold cursor-pointer transition-colors hover:bg-accent/90; }
+  .plus-icon { @apply text-lg font-bold; }
+  /* Modern dark theme project cards */
+  .preview-card { @apply bg-neutral-900/60 border border-neutral-700 rounded-xl p-5 flex gap-4 items-center backdrop-blur transition-all duration-200 hover:border-accent/40 hover:bg-neutral-900/80; }
+  .project-image { @apply w-[150px] h-[90px] bg-neutral-800 border border-neutral-600 flex items-center justify-center text-neutral-500 rounded-lg shrink-0 text-sm font-medium; }
+  .card-details { @apply grow text-neutral-300; }
+  .card-info,.card-status { @apply flex justify-between items-center; }
+  .card-status { @apply mt-4 text-sm text-neutral-400; }
+  .checkout-status { @apply flex items-center gap-1 text-neutral-400; }
+  .card-actions { @apply flex gap-2 mt-3; }
+  .small-btn { @apply inline-flex items-center px-3 py-1 rounded-lg bg-accent/10 border border-accent/30 text-accent text-sm font-medium hover:bg-accent/20 transition-colors; }
+  .owner-link, .user-pop-btn { @apply text-accent hover:text-accent/80 underline transition-colors cursor-pointer bg-transparent border-0 p-0 font-medium; }
+  .hashtags-row { @apply flex flex-wrap gap-1 mt-2; }
+  .hashtag { @apply inline-flex items-center px-2 py-1 rounded-md bg-neutral-800/60 border border-neutral-600 text-neutral-300 text-xs font-medium hover:border-accent/60 hover:text-accent transition-colors cursor-pointer; }
+  .activity-card-header { @apply flex gap-3 items-center mb-2; }
+  .activity-user-icon { @apply text-[28px] text-accent; }
+  .activity-user-info p { @apply m-0 leading-tight; }
+  .activity-user-info .user-name { @apply font-semibold text-neutral-200; }
+  .activity-user-info .role-info { @apply text-[13px] text-neutral-400; }
+  .activity-card-footer { @apply flex justify-between items-end text-[12px] text-neutral-400 mt-2; }
+  /* ProjectPage.css */
+  /* Removed obsolete project page layout classes post modern redesign */
+  .footer-title { @apply font-heading text-2xl mb-4 mt-0; }
+  .dashboard-actions { @apply list-none p-0 m-0; }
+  .dashboard-actions li { @apply mb-3; }
+  .dashboard-actions a { @apply no-underline text-[#1a1a1a] text-base font-semibold flex items-center gap-2; }
+  .dashboard-actions .icon { @apply text-[20px] w-[25px]; }
+  .members-list { @apply list-none p-0 m-0; }
+  .members-list li { @apply mb-2 font-semibold; }
+  .members-list .owner-star { @apply text-[#ffbf00]; }
+  /* ProfilePage.css */
+  .profile-page-container { @apply px-10 py-5 font-body text-[#1a1a1a]; }
+  .profile-header { @apply bg-[#e9e9e9] h-[150px] flex items-center justify-between px-5 rounded-lg mb-5; }
+  .back-button { @apply text-[36px] font-bold text-[#1a1a1a] no-underline; }
+  .profile-content { @apply flex gap-10; }
+  .profile-info-column { @apply basis-[35%] flex flex-col gap-5; }
+  .profile-avatar-section { @apply relative w-[150px]; }
+  .profile-avatar { @apply text-[150px]; }
+  .add-friend-btn { @apply absolute bottom-5 right-5 bg-[#1a1a1a] text-white border-2 border-white rounded-full w-10 h-10 text-2xl flex items-center justify-center cursor-pointer; }
+  .profile-name-title h2 { @apply font-heading text-[28px] m-0; }
+  .profile-name-title p { @apply mt-1 mb-0 text-[#555] font-semibold; }
+  .user-details-box { @apply bg-[#e9e9e9] p-6 rounded-[30px_30px_80px_30px/30px_30px_60px_30px] flex flex-col gap-4; }
+  .detail-item { @apply flex items-center gap-4 font-semibold; }
+  .detail-icon { @apply text-[24px] w-[30px]; }
+  .edit-info-btn { @apply self-end mt-2 bg-white border border-[#ccc] rounded-full px-5 py-2 font-semibold flex items-center gap-2 cursor-pointer; }
+  .bug-fixes-counter { @apply flex items-center gap-2 font-semibold; }
+  .bug-fixes-counter .trophy-icon { @apply text-[32px]; }
+  .profile-activity-column { @apply basis-[65%] flex flex-col gap-8; }
+  .activity-box { @apply bg-[#e9e9e9] p-6 rounded-2xl; }
+  .activity-box h3 { @apply font-heading text-xl mb-5 mt-0; }
+  .activity-list { @apply list-none p-0 m-0 flex flex-col gap-4; }
+  .activity-list li { @apply flex items-center gap-4 font-semibold; }
+  .list-icon { @apply text-[24px]; }
+  .tag-cloud { @apply flex flex-wrap gap-2 py-2; }
+  .tag-cloud-item { @apply font-semibold transition-transform; }
+  .tag-cloud-item:hover { @apply scale-110; }
+  .tag-cloud.empty { @apply italic opacity-60; }
+  .friend-action-btn { @apply ml-2 px-2 py-1 border border-[#2b6cb0] bg-[#3182ce] text-white rounded text-[12px] cursor-pointer; }
+  .friend-action-btn.state-friends { @apply bg-[#2f855a] border-[#276749]; }
+  .friend-action-btn.state-request-sent { @apply bg-[#a0aec0] border-[#718096] cursor-default; }
+  .friend-action-btn.state-request-received { @apply bg-[#805ad5] border-[#6b46c1]; }
+  .friend-action-btn:disabled { @apply opacity-75; }
+  .tag-cloud-wrapper h3 { @apply mt-5 text-[15px] tracking-[0.5px]; }
+  .friend-summary { @apply mt-4 text-[0.8rem] opacity-85; }
+  .user-activity-list { @apply list-none p-0 my-2 text-[12px] flex flex-col gap-1; }
+  .user-activity-item { @apply bg-[#1e293b] px-2 py-1 rounded text-[12px]; }
+  .ua-user { @apply font-semibold; }
+  .ua-proj { @apply text-[#63b3ed]; }
+  .owned-projects-list,.member-projects-list { @apply list-none p-0 my-1 flex flex-wrap gap-1; }
+  .owned-projects-list li,.member-projects-list li { @apply bg-[#2d3748] px-2 py-1 rounded text-[11px]; }
+  .edit-profile-form-container { @apply bg-[#1a202c] p-3 rounded-md mt-3; }
+  .edit-profile-form-container .form-group { @apply flex flex-col gap-1 mb-2; }
+  .edit-profile-form-container input,.edit-profile-form-container textarea { @apply bg-[#2d3748] border border-[#4a5568] px-2 py-1 text-[#e2e8f0] rounded text-[12px]; }
+  .edit-profile-form-container label { @apply text-[10px] uppercase tracking-[0.5px] opacity-80; }
+  .edit-profile-form-container button { @apply mt-1; }
+  .create-project-inline { @apply mt-4 bg-[#1a202c] p-3 rounded-md; }
+  .create-project-inline h3 { @apply m-0 mb-2 text-[0.9rem]; }
+  /* New enhanced profile layout components */
+  .profile-shell { @apply max-w-7xl mx-auto px-6 lg:px-10 py-8 space-y-8; }
+  .profile-hero { @apply relative overflow-hidden rounded-3xl bg-gradient-to-br from-[#262626] via-[#1f1f1f] to-[#141414] border border-neutral-700 p-8 flex flex-col lg:flex-row gap-8; }
+  .profile-hero::after { content:''; @apply absolute inset-0 pointer-events-none; background:radial-gradient(circle at 20% 15%,rgba(255,69,0,0.25),transparent 60%); }
+  .avatar-ring { @apply relative w-40 h-40 shrink-0 rounded-2xl bg-gradient-to-br from-accent/60 to-accent/20 flex items-center justify-center text-6xl font-heading text-white shadow-lg shadow-accent/20 ring-4 ring-accent/30 backdrop-blur; }
+  .avatar-ring::before { content:''; @apply absolute inset-0 rounded-2xl bg-gradient-to-tr from-white/10 to-transparent; }
+  .profile-meta { @apply flex-1 flex flex-col gap-4 relative z-10; }
+  .profile-name { @apply text-4xl font-heading font-semibold tracking-tight flex items-center gap-3; }
+  .profile-role { @apply inline-flex items-center gap-2 text-sm font-medium px-3 py-1 rounded-full bg-accent/15 text-accent; }
+  .profile-stat-grid { @apply grid grid-cols-3 gap-4 mt-auto; }
+  .stat-card { @apply bg-neutral-800/60 border border-neutral-700 rounded-xl p-4 flex flex-col gap-1 backdrop-blur; }
+  .stat-label { @apply text-[11px] uppercase tracking-wider text-neutral-400 font-medium; }
+  .stat-value { @apply text-xl font-semibold text-white; }
+  .action-bar { @apply flex flex-wrap gap-3 mt-4; }
+  .btn { @apply inline-flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium transition-colors; }
+  .btn-primary { @apply btn bg-accent text-white shadow hover:bg-accent/90; }
+  .btn-outline { @apply btn border border-neutral-600 text-neutral-200 hover:bg-neutral-700/60; }
+  .profile-grid { @apply grid gap-6 md:grid-cols-5; }
+  .profile-col-left { @apply md:col-span-2 flex flex-col gap-6; }
+  .profile-col-right { @apply md:col-span-3 flex flex-col gap-6; }
+  .panel { @apply rounded-2xl bg-neutral-900/60 border border-neutral-700 p-6 backdrop-blur flex flex-col gap-4; }
+  .panel-header { @apply flex items-center justify-between gap-4; }
+  .panel-title { @apply text-lg font-heading font-semibold tracking-tight; }
+  .tag-cloud-modern { @apply flex flex-wrap gap-2; }
+  .tag-chip { @apply text-xs font-medium px-3 py-1 rounded-full bg-neutral-800 border border-neutral-600 text-neutral-200 hover:border-accent/60 hover:text-accent transition; }
+  .project-pill-list { @apply flex flex-wrap gap-2; }
+  .project-pill { @apply text-xs font-medium px-3 py-1 rounded-full bg-neutral-800 border border-neutral-700 text-neutral-300; }
+  .friend-badge { @apply inline-flex items-center gap-1 text-[11px] font-medium px-2 py-0.5 rounded-full bg-neutral-700 text-neutral-300; }
+  .empty-soft { @apply text-sm italic text-neutral-500; }
+  /* Refined list aesthetics (remove solid grey blocks) */
+  .user-activity-item { @apply bg-transparent p-0 rounded-none text-[12px]; }
+  .user-activity-item:not(:last-child) { @apply border-b border-neutral-700/60 pb-1; }
+  /* Modern Home page layout */
+  .home-shell { @apply max-w-7xl mx-auto px-6 lg:px-10 py-8 space-y-10; }
+  .home-hero { @apply relative overflow-hidden rounded-3xl bg-gradient-to-br from-neutral-900 via-neutral-950 to-black border border-neutral-800 p-8 flex flex-col gap-6; }
+  .home-hero::after { content:''; @apply absolute inset-0 pointer-events-none; background:radial-gradient(circle at 75% 35%,rgba(255,69,0,0.18),transparent 60%); }
+  .home-hero-header { @apply flex flex-col md:flex-row md:items-center justify-between gap-6; }
+  .home-hero-left { @apply flex flex-col gap-4 max-w-2xl; }
+  .home-hero-title { @apply text-4xl md:text-5xl font-heading font-semibold tracking-tight text-white; }
+  .home-hero-sub { @apply text-neutral-400 max-w-prose; }
+  .home-action-bar { @apply flex flex-wrap gap-3 items-center; }
+  .home-stat-row { @apply grid grid-cols-3 sm:grid-cols-6 gap-3 mt-4; }
+  .home-stat { @apply bg-neutral-900/60 border border-neutral-800 rounded-xl p-3 flex flex-col gap-1 text-center backdrop-blur; }
+  .home-stat-label { @apply text-[10px] uppercase tracking-wider text-neutral-500 font-medium; }
+  .home-stat-value { @apply text-lg font-semibold text-white; }
+  .home-grid { @apply grid gap-6 md:grid-cols-5; }
+  .home-col-main { @apply md:col-span-3 flex flex-col gap-6; }
+  .home-col-side { @apply md:col-span-2 flex flex-col gap-6; }
+  .panel-feed { @apply panel p-0 overflow-hidden; }
+  .panel-section-header { @apply flex items-center justify-between px-6 pt-5 pb-3 border-b border-neutral-800; }
+  .panel-section-title { @apply font-heading font-semibold text-neutral-200 tracking-tight; }
+  .feed-inner { @apply flex flex-col divide-y divide-neutral-800; }
+  .feed-empty { @apply p-6 text-sm italic text-neutral-500; }
+  .global-search-panel { @apply panel; }
+  .activity-panel { @apply panel; }
+  .project-feed-panel { @apply panel; }
+  .new-project-btn { @apply btn-primary inline-flex items-center gap-2; }
+  .mini-separator { @apply h-px bg-neutral-800 my-4; }
+  /* Modern Project page layout */
+  .project-shell { @apply max-w-5xl mx-auto px-6 lg:px-10 py-10 space-y-10; }
+  .project-hero { @apply relative overflow-hidden rounded-3xl bg-gradient-to-br from-neutral-900 via-neutral-950 to-black border border-neutral-800 p-8 flex flex-col md:flex-row gap-10; }
+  .project-hero::after { content:''; @apply absolute inset-0 pointer-events-none; background:radial-gradient(circle at 20% 25%,rgba(255,69,0,0.22),transparent 65%); }
+  .project-media { @apply relative w-64 h-64 shrink-0 rounded-2xl bg-neutral-800 flex items-center justify-center text-neutral-500 text-sm ring-4 ring-neutral-700/40 overflow-hidden cursor-pointer; }
+  .project-media img { @apply w-full h-full object-cover; }
+  .project-meta { @apply flex-1 flex flex-col gap-5 relative z-10; }
+  .project-title { @apply text-4xl font-heading font-semibold tracking-tight text-white leading-tight; }
+  .project-meta-row { @apply flex flex-wrap gap-2; }
+  .meta-pill { @apply inline-flex items-center gap-1 px-3 py-1 rounded-full bg-neutral-800/70 border border-neutral-700 text-xs font-medium text-neutral-300; }
+  .project-hashtags-row { @apply flex flex-wrap gap-2; }
+  .project-actions { @apply flex flex-wrap gap-3; }
+  .project-checkout-btn { @apply btn-primary; }
+  .project-body-grid { @apply grid gap-8 md:grid-cols-5; }
+  .project-col-main { @apply md:col-span-3 flex flex-col gap-8; }
+  .project-col-side { @apply md:col-span-2 flex flex-col gap-8; }
+  .project-panel { @apply panel; }
+  .project-description-box { @apply panel; }
+  .project-description-text { @apply text-sm leading-relaxed text-neutral-300 whitespace-pre-line; }
+  .activity-log-modern { @apply panel; }
+  .activity-log-modern h3 { @apply panel-title text-base; }
+  .activity-log-list { @apply flex flex-col divide-y divide-neutral-800; }
+  .activity-log-item { @apply flex items-center gap-3 py-2 text-xs text-neutral-300; }
+  .activity-log-item .log-time { @apply font-mono text-neutral-500; }
+  .activity-log-item .log-type { @apply uppercase tracking-wide text-[10px] font-semibold text-accent; }
+  .activity-log-item .log-msg { @apply flex-1; }
+  .activity-log-item .log-version { @apply text-neutral-500; }
+  .messages-panel { @apply panel; }
+  .dashboard-panel { @apply panel; }
+  .members-panel { @apply panel; }
+  .image-lightbox { @apply fixed inset-0 bg-black/80 backdrop-blur flex items-center justify-center p-8 z-50; }
+  .image-lightbox img { @apply max-w-full max-h-full rounded-xl shadow-2xl; }
+  .user-activity-item:hover { @apply text-accent; }
+  .ua-user { @apply font-semibold text-neutral-200; }
+  .ua-proj { @apply text-accent; }
+  .followers-list-item, .interaction-list-item { @apply flex items-center justify-between gap-3 py-2 px-0 text-sm text-neutral-300 transition-colors; }
+  .followers-list-item:not(:last-child), .interaction-list-item:not(:last-child) { @apply border-b border-neutral-700/60; }
+  .followers-list-item:hover, .interaction-list-item:hover { @apply text-accent; }
+  .follower-handle { @apply font-medium; }
+  .interaction-meta { @apply text-[11px] uppercase tracking-wide text-neutral-500; }
+}
+
+/* Utility additions (hybrid) */
+@layer utilities {
+  .flex-center { @apply flex items-center justify-center; }
+  .grid-cols-auto-fit { grid-template-columns: repeat(auto-fit,minmax(220px,1fr)); }
+}

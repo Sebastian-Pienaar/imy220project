@@ -7,10 +7,7 @@ import HomePage from './pages/HomePage';
 import ProjectPage from './pages/ProjectPage';
 import ProfilePage from './pages/ProfilePage';
 
-import './App.css';
-import './pages/HomePage.css';
-import './pages/ProjectPage.css';
-import './pages/ProfilePage.css';
+// All legacy page CSS migrated into Tailwind component layer.
 
 
 function App() {

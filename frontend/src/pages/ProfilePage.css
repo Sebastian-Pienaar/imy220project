@@ -160,3 +160,158 @@
 .list-icon {
     font-size: 24px;
 }
+
+/* --- New Profile Page Features --- */
+.tag-cloud { 
+    display: flex; 
+    flex-wrap: wrap; 
+    gap: .5rem; 
+    padding: .5rem 0; 
+}
+
+.tag-cloud-item { 
+    font-weight: 600; 
+    cursor: default; 
+    transition: transform .15s; 
+}
+
+.tag-cloud-item:hover { 
+    transform: scale(1.1); 
+}
+
+.tag-cloud.empty { 
+    font-style: italic; 
+    opacity: .6; 
+}
+
+.friend-action-btn { 
+    margin-left: .5rem; 
+    padding: .3rem .65rem; 
+    border: 1px solid #2b6cb0; 
+    background: #3182ce; 
+    color: #fff; 
+    border-radius: 4px; 
+    font-size: .75rem; 
+    cursor: pointer; 
+}
+
+.friend-action-btn.state-friends { 
+    background: #2f855a; 
+    border-color: #276749; 
+}
+
+.friend-action-btn.state-request-sent { 
+    background: #a0aec0; 
+    border-color: #718096; 
+    cursor: default; 
+}
+
+.friend-action-btn.state-request-received { 
+    background: #805ad5; 
+    border-color: #6b46c1; 
+}
+
+.friend-action-btn:disabled { 
+    opacity: .75; 
+}
+
+.tag-cloud-wrapper h3 { 
+    margin-top: 1.25rem; 
+    font-size: .95rem; 
+    letter-spacing: .5px; 
+}
+
+.friend-summary { 
+    margin-top: 1rem; 
+    font-size: .8rem; 
+    opacity: .85; 
+}
+
+.user-activity-list { 
+    list-style: none; 
+    padding: 0; 
+    margin: .5rem 0; 
+    font-size: .75rem; 
+    display: flex; 
+    flex-direction: column; 
+    gap: .35rem; 
+}
+
+.user-activity-item { 
+    background: #1e293b; 
+    padding: .4rem .5rem; 
+    border-radius: 4px; 
+}
+
+.ua-user { 
+    font-weight: 600; 
+}
+
+.ua-proj { 
+    color: #63b3ed; 
+}
+
+.owned-projects-list, 
+.member-projects-list { 
+    list-style: none; 
+    padding: 0; 
+    margin: .4rem 0; 
+    display: flex; 
+    flex-wrap: wrap; 
+    gap: .4rem; 
+}
+
+.owned-projects-list li, 
+.member-projects-list li { 
+    background: #2d3748; 
+    padding: .3rem .55rem; 
+    border-radius: 4px; 
+    font-size: .7rem; 
+}
+
+.edit-profile-form-container { 
+    background: #1a202c; 
+    padding: .75rem; 
+    border-radius: 6px; 
+    margin-top: .75rem; 
+}
+
+.edit-profile-form-container .form-group { 
+    display: flex; 
+    flex-direction: column; 
+    gap: .25rem; 
+    margin-bottom: .5rem; 
+}
+
+.edit-profile-form-container input, 
+.edit-profile-form-container textarea { 
+    background: #2d3748; 
+    border: 1px solid #4a5568; 
+    padding: .4rem .5rem; 
+    color: #e2e8f0; 
+    border-radius: 4px; 
+    font-size: .75rem; 
+}
+
+.edit-profile-form-container label { 
+    font-size: .65rem; 
+    text-transform: uppercase; 
+    letter-spacing: .5px; 
+    opacity: .8; 
+}
+
+.edit-profile-form-container button { 
+    margin-top: .25rem; 
+}
+
+.create-project-inline { 
+    margin-top: 1rem; 
+    background: #1a202c; 
+    padding: .75rem; 
+    border-radius: 6px; 
+}
+
+.create-project-inline h3 { 
+    margin: 0 0 .5rem; 
+    font-size: .9rem; 
+}

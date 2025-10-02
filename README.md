@@ -1,28 +1,14 @@
-# IMY 220 Project - Docker Commands
-
-## Prerequisites
-need Docker
-
-## 1. Build  Docker image
-
-docker build -t bugbox-app .
+# Docker commands
 
 
-## 2. Run the Docker Container
+## Build and start (first time or after code changes)
+docker-compose up --build
 
-docker run -d -p 3000:3000 -p 8000:8000 --name bugbox-container bugbox-app
+## Start without rebuilding (if no code changes)
+docker-compose up
 
+## Stop the application
+docker-compose down
 
-## 3. Accessing the Application
-
-- **Frontend (React App):** Open a web browser and go to http://localhost:3000
-- **Backend (API Server):** The frontend will automatically make requests to http://localhost:8000/api/...
-
-
-## 4. Stop and remove container
-
-To stop the running container:
-docker stop bugbox-container
-
-To remove the stopped container:
-docker rm bugbox-container
+##Visit
+ http://localhost:8000

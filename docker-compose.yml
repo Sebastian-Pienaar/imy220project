@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  # Main Application (connects to MongoDB Atlas)
+  app:
+    build: .
+    container_name: imy220_app
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    environment:
+      - NODE_ENV=production
+      - PORT=8000
+      - MONGODB_URI=${MONGODB_URI}
+      - JWT_SECRET=${JWT_SECRET}
+    volumes:
+      # Mount .env file to pass environment variables
+      - ./.env:/app/.env:ro

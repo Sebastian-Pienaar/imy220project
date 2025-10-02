@@ -1,0 +1,19 @@
+FROM node:18-alpine
+WORKDIR /app
+
+# Copy backend-specific dependencies only (still need full package.json unless separated)
+COPY package*.json ./
+RUN npm install --production
+
+COPY backend ./backend
+COPY backend/server.js ./server.js.copyref
+COPY backend/config ./backend/config
+COPY backend/models ./backend/models
+COPY backend/repositories ./backend/repositories
+COPY backend/routes ./backend/routes
+
+ENV PORT=8000
+EXPOSE 8000
+
+# Production server entry; reuse existing backend/server.js (already awaits DB)
+CMD ["node", "backend/server.js"]
