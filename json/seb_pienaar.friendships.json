@@ -1,0 +1,114 @@
+[{
+  "_id": {
+    "$oid": "690202d7a0f7033a6cceec9a"
+  },
+  "requesterId": {
+    "$oid": "6901ff0fa480b7dfe6077745"
+  },
+  "recipientId": {
+    "$oid": "68de52d8868ed902e8d50431"
+  },
+  "status": "accepted",
+  "createdAt": {
+    "$date": "2025-10-29T12:04:39.885Z"
+  },
+  "updatedAt": {
+    "$date": "2025-10-29T12:05:18.367Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6903804061fd78976e7a64e7"
+  },
+  "requesterId": {
+    "$oid": "6903800261fd78976e7a64e0"
+  },
+  "recipientId": {
+    "$oid": "69037d19a0c2f17847a06a33"
+  },
+  "status": "accepted",
+  "createdAt": {
+    "$date": "2025-10-30T15:12:00.119Z"
+  },
+  "updatedAt": {
+    "$date": "2025-10-30T15:12:32.144Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "690384e6ef8c6356a7056c65"
+  },
+  "requesterId": {
+    "$oid": "690384d1ef8c6356a7056c62"
+  },
+  "recipientId": {
+    "$oid": "69037d19a0c2f17847a06a33"
+  },
+  "status": "accepted",
+  "createdAt": {
+    "$date": "2025-10-30T15:31:50.686Z"
+  },
+  "updatedAt": {
+    "$date": "2025-10-30T15:49:38.772Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6903b9e9f7af3bd371d69f5e"
+  },
+  "requesterId": {
+    "$oid": "6903b914f7af3bd371d69f55"
+  },
+  "recipientId": {
+    "$oid": "69037d19a0c2f17847a06a33"
+  },
+  "status": "pending",
+  "createdAt": {
+    "$date": "2025-10-30T19:18:01.587Z"
+  },
+  "updatedAt": {
+    "$date": "2025-10-30T19:18:01.587Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6903bc28f7af3bd371d69fa4"
+  },
+  "requesterId": {
+    "$oid": "6903bb95f7af3bd371d69f9b"
+  },
+  "recipientId": {
+    "$oid": "69037d19a0c2f17847a06a33"
+  },
+  "status": "accepted",
+  "createdAt": {
+    "$date": "2025-10-30T19:27:36.437Z"
+  },
+  "updatedAt": {
+    "$date": "2025-10-30T19:29:15.694Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6903bc37f7af3bd371d69fa7"
+  },
+  "requesterId": {
+    "$oid": "6903bb95f7af3bd371d69f9b"
+  },
+  "recipientId": {
+    "$oid": "6903800261fd78976e7a64e0"
+  },
+  "status": "accepted",
+  "createdAt": {
+    "$date": "2025-10-30T19:27:51.431Z"
+  },
+  "updatedAt": {
+    "$date": "2025-10-30T19:28:11.103Z"
+  },
+  "__v": 0
+}]
