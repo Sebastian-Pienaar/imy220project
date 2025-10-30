@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useProjects } from '../context/ProjectsContext';
 
-// In a real app, this component would receive the current user's data as props
+
 const EditProfileForm = ({ currentUser, onClose }) => {
   const { updateUser } = useProjects();
   const [form, setForm] = useState({
@@ -11,10 +11,40 @@ const EditProfileForm = ({ currentUser, onClose }) => {
     bio: currentUser?.bio || '',
     languages: (currentUser?.languages || []).join(', ')
   });
+  const [profileImage, setProfileImage] = useState(currentUser?.profileImage || null);
+  const [imagePreview, setImagePreview] = useState(currentUser?.profileImage || null);
+  const [uploadError, setUploadError] = useState('');
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setForm(f => ({ ...f, [name]: value }));
+  };
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+   
+    if (file.size > 5 * 1024 * 1024) {
+      setUploadError('Image must be less than 5MB');
+      return;
+    }
+
+
+    if (!file.type.startsWith('image/')) {
+      setUploadError('Please select an image file');
+      return;
+    }
+
+    setUploadError('');
+
+
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setImagePreview(reader.result);
+      setProfileImage(reader.result); 
+    };
+    reader.readAsDataURL(file);
   };
 
   const handleSubmit = (event) => {
@@ -24,7 +54,8 @@ const EditProfileForm = ({ currentUser, onClose }) => {
       role: form.role.trim(),
       location: form.location.trim(),
       bio: form.bio.trim(),
-      languages: form.languages.split(',').map(l => l.trim()).filter(Boolean)
+      languages: form.languages.split(',').map(l => l.trim()).filter(Boolean),
+      profileImage: profileImage
     });
     onClose?.();
   };
@@ -33,6 +64,29 @@ const EditProfileForm = ({ currentUser, onClose }) => {
     <div className="edit-profile-form-container">
       <h2>Edit Your Profile</h2>
       <form onSubmit={handleSubmit}>
+        <div className="form-group">
+          <label htmlFor="profileImage">Profile Image</label>
+          {imagePreview && (
+            <div className="mb-3">
+              <img 
+                src={imagePreview} 
+                alt="Profile preview" 
+                className="w-32 h-32 rounded-full object-cover border-4 border-neutral-700"
+              />
+            </div>
+          )}
+          <input 
+            type="file" 
+            id="profileImage" 
+            name="profileImage" 
+            accept="image/*"
+            onChange={handleImageChange}
+            className="w-full px-3 py-2 bg-neutral-800 border border-neutral-600 rounded-lg text-white file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-accent file:text-white hover:file:bg-accent/90 file:cursor-pointer"
+          />
+          {uploadError && (
+            <p className="text-red-400 text-sm mt-1">{uploadError}</p>
+          )}
+        </div>
         <div className="form-group">
           <label htmlFor="name">Full Name</label>
           <input type="text" id="name" name="name" value={form.name} onChange={handleChange} />
@@ -60,4 +114,4 @@ const EditProfileForm = ({ currentUser, onClose }) => {
 };
 
 export default EditProfileForm;
-// At the top of ProfilePage.js
+

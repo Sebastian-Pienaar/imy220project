@@ -1,29 +1,21 @@
-//ProfilePage.js
+
 import React, { useState, useMemo, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useProjects } from '../context/ProjectsContext';
-
 import EditProfileForm from '../components/EditProfileForm';
 import CreateProject from '../components/CreateProject';
-import UserProjects from '../components/UserProjects';
-import UserInteractions from '../components/UserInteractions';
-import FollowersList from '../components/FollowersList';
 import TagCloud from '../components/TagCloud';
 import UserActivity from '../components/UserActivity';
 
-//import './ProfilePage.css';
+
 
 const ProfilePage = () => {
   const { profileId } = useParams();
-  const { users, currentUserId, updateUser, isFriends, hasPendingRequest, sendFriendRequest, acceptFriendRequest, friendships, projects, logout } = useProjects();
+  const { users, currentUserId, updateUser, isFriends, hasPendingRequest, sendFriendRequest, acceptFriendRequest, unfriend, friendships, projects, logout } = useProjects();
   const navigate = useNavigate();
   const [editing, setEditing] = useState(false);
-  // Resolve profile user by:
-  // 1. Direct ID match
-  // 2. Username (case-insensitive) if slug-like param
-  // 3. Fallback to current user
   const [fetchedUser, setFetchedUser] = useState(null);
-  const isSlug = profileId && /[a-zA-Z]/.test(profileId) && profileId.length < 64; // heuristic: ObjectId length 24
+  const isSlug = profileId && /[a-zA-Z]/.test(profileId) && profileId.length < 64;
 
   let profileUser = users.find(u => u.id === profileId);
   if (!profileUser && isSlug) {
@@ -31,7 +23,6 @@ const ProfilePage = () => {
   }
   if (!profileUser) profileUser = users.find(u => u.id === currentUserId);
 
-  // On-demand fetch if still not found and we have a slug candidate
   useEffect(() => {
     if (!profileUser && isSlug && profileId) {
       fetch(`/api/users/by-username/${profileId}`)
@@ -46,7 +37,7 @@ const ProfilePage = () => {
   const isOwn = profileUser?.id === currentUserId;
 
   const ownedProjects = useMemo(() => projects.filter(p => p.ownerId === profileUser?.id), [projects, profileUser]);
-  const memberProjects = ownedProjects; // placeholder: would include membership list when model extended
+  const memberProjects = ownedProjects;
 
   const friendState = useMemo(() => {
     if (!profileUser || isOwn) return null;
@@ -56,39 +47,66 @@ const ProfilePage = () => {
     return 'none';
   }, [profileUser, isOwn, isFriends, hasPendingRequest, currentUserId]);
 
+  const userFriends = useMemo(() => {
+    if (!profileUser) return [];
+    return friendships
+      .filter(f => f.status === 'accepted' && (f.requesterId === profileUser.id || f.recipientId === profileUser.id))
+      .map(f => {
+        const friendId = f.requesterId === profileUser.id ? f.recipientId : f.requesterId;
+        return users.find(u => u.id === friendId);
+      })
+      .filter(Boolean); 
+  }, [profileUser, friendships, users]);
+
   const handleFriendAction = () => {
     if (!profileUser || isOwn) return;
     if (friendState === 'none') sendFriendRequest(profileUser.id);
     if (friendState === 'request-received') acceptFriendRequest(profileUser.id);
+    if (friendState === 'friends') {
+      if (window.confirm(`Are you sure you want to unfriend ${profileUser.name}?`)) {
+        unfriend(profileUser.id);
+      }
+    }
   };
 
   if (!profileUser) return <main className="profile-shell"><p className="empty-soft">User not found.</p></main>;
 
   const friendButtonLabel = {
-    friends: '✓ Friends',
+    friends: 'Unfriend',
     'request-sent': 'Request Sent',
     'request-received': 'Accept Request',
     none: 'Add Friend'
   }[friendState] || '';
 
-  const friendBtnDisabled = friendState === 'friends' || friendState === 'request-sent';
+  const friendBtnDisabled = friendState === 'request-sent';
+
+
+  const canViewFullProfile = isOwn || friendState === 'friends';
 
   return (
     <main className="profile-shell">
       {/* Hero Section */}
       <section className="profile-hero">
-        <div className="avatar-ring" aria-label="User avatar">{profileUser.name.charAt(0)}</div>
+        <div className="avatar-ring" aria-label="User avatar">
+          {profileUser.profileImage ? (
+            <img 
+              src={profileUser.profileImage} 
+              alt={`${profileUser.name}'s profile`}
+              className="w-full h-full object-cover rounded-full"
+            />
+          ) : (
+            profileUser.name.charAt(0)
+          )}
+        </div>
         <div className="profile-meta">
           <div className="flex items-start gap-4 flex-wrap">
             <h1 className="profile-name">{profileUser.name}</h1>
-            <span className="profile-role">{profileUser.role || 'Role not set'}</span>
             {isOwn && <span className="friend-badge">you</span>}
           </div>
 
           <div className="profile-stat-grid">
-            <div className="stat-card"><span className="stat-label">Owned</span><span className="stat-value">{ownedProjects.length}</span></div>
+            <div className="stat-card"><span className="stat-label">Projects Owned</span><span className="stat-value">{ownedProjects.length}</span></div>
             <div className="stat-card"><span className="stat-label">Friends</span><span className="stat-value">{friendships.filter(f => f.status === 'accepted' && (f.requesterId === profileUser.id || f.recipientId === profileUser.id)).length}</span></div>
-            <div className="stat-card"><span className="stat-label">Activity</span><span className="stat-value">{(profileUser.activity?.length) || 0}</span></div>
           </div>
 
           <div className="action-bar">
@@ -117,8 +135,41 @@ const ProfilePage = () => {
         </div>
       )}
 
+      {!canViewFullProfile && (
+        <div className="panel max-w-2xl mx-auto mt-8">
+          <div className="panel-header">
+            <h2 className="panel-title">🔒 Private Profile</h2>
+          </div>
+          <div className="p-6 text-center">
+            <p className="text-neutral-300 mb-4">
+              This profile is private. Become friends with <strong>{profileUser.name}</strong> to view their full profile, projects, and activity.
+            </p>
+            {friendState === 'none' && (
+              <button 
+                className="btn-primary"
+                onClick={handleFriendAction}
+              >
+                Send Friend Request
+              </button>
+            )}
+            {friendState === 'request-sent' && (
+              <p className="text-neutral-400 text-sm">Friend request pending...</p>
+            )}
+            {friendState === 'request-received' && (
+              <button 
+                className="btn-primary"
+                onClick={handleFriendAction}
+              >
+                Accept Friend Request
+              </button>
+            )}
+          </div>
+        </div>
+      )}
+
+      {canViewFullProfile && (
       <div className="profile-grid">
-        {/* Left Column */}
+        {/* Left column */}
         <div className="profile-col-left">
           <div className="panel">
             <div className="panel-header"><h2 className="panel-title">About</h2></div>
@@ -136,8 +187,39 @@ const ProfilePage = () => {
             </div>
           </div>
           <div className="panel">
-            <div className="panel-header"><h2 className="panel-title">Connections</h2></div>
-            <p className="text-neutral-300 text-sm">{friendships.filter(f => f.status === 'accepted' && (f.requesterId === profileUser.id || f.recipientId === profileUser.id)).length} friends</p>
+            <div className="panel-header">
+              <h2 className="panel-title">Connections</h2>
+              <span className="text-neutral-400 text-xs">({userFriends.length} friends)</span>
+            </div>
+            {userFriends.length > 0 ? (
+              <div className="space-y-2">
+                {userFriends.map(friend => (
+                  <Link 
+                    key={friend.id} 
+                    to={`/profile/${friend.id}`}
+                    className="flex items-center gap-3 p-2 rounded-lg hover:bg-neutral-800/50 transition-colors"
+                  >
+                    <div className="w-10 h-10 rounded-full bg-accent flex items-center justify-center text-white font-bold flex-shrink-0">
+                      {friend.profileImage ? (
+                        <img 
+                          src={friend.profileImage} 
+                          alt={friend.name} 
+                          className="w-full h-full object-cover rounded-full"
+                        />
+                      ) : (
+                        <span className="text-lg">{friend.name.charAt(0)}</span>
+                      )}
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-white text-sm font-medium truncate">{friend.name}</p>
+                      <p className="text-neutral-400 text-xs truncate">@{friend.username || friend.id}</p>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            ) : (
+              <p className="text-neutral-400 text-sm">No friends yet.</p>
+            )}
           </div>
           {isOwn && (
             <div className="panel">
@@ -147,7 +229,7 @@ const ProfilePage = () => {
           )}
         </div>
 
-        {/* Right Column */}
+        {/*Right column */}
         <div className="profile-col-right">
             <div className="panel">
               <div className="panel-header"><h2 className="panel-title">Owned Projects</h2></div>
@@ -162,19 +244,15 @@ const ProfilePage = () => {
               ) : <p className="empty-soft">No member projects.</p>}
             </div>
             <div className="panel">
-              <div className="panel-header"><h2 className="panel-title">Recent Activity</h2></div>
+              <div className="panel-header">
+                <h2 className="panel-title">Recent Activity</h2>
+                <span className="text-xs text-neutral-500">Latest updates</span>
+              </div>
               <UserActivity userId={profileUser.id} />
-            </div>
-            <div className="panel">
-              <div className="panel-header"><h2 className="panel-title">Interactions</h2></div>
-              <UserInteractions userName={profileUser.name} />
-            </div>
-            <div className="panel">
-              <div className="panel-header"><h2 className="panel-title">Followers</h2></div>
-              <FollowersList />
             </div>
         </div>
       </div>
+      )}
     </main>
   );
 };

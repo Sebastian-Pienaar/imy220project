@@ -3,14 +3,14 @@ const mongoose = require('mongoose');
 
 async function createRequest(requesterId, recipientId) {
   if (requesterId.toString() === recipientId.toString()) throw new Error('Cannot friend yourself');
-  // Check if reversed already accepted or pending
+
   const existing = await Friendship.findOne({
     $or: [
       { requesterId, recipientId },
       { requesterId: recipientId, recipientId: requesterId }
     ]
   });
-  if (existing) return existing; // idempotent
+  if (existing) return existing;
   return Friendship.create({ requesterId, recipientId });
 }
 

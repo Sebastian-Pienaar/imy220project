@@ -1,6 +1,6 @@
-//HomePage.js
-import React, { useState, useMemo } from 'react';
 
+import React, { useState, useMemo } from 'react';
+import { Link } from 'react-router-dom';
 
 import Navbar from '../components/Navbar';
 import ProjectFeed from '../components/ProjectFeed';
@@ -11,14 +11,24 @@ import GlobalSearch from '../components/GlobalSearch';
 import { useProjects } from '../context/ProjectsContext';
 
 
-//import './HomePage.css';
 
 
 const HomePage = () => {
   const [isCreateOpen, setIsCreateOpen] = useState(false);
-  const { projects, currentUserId, friendships, globalActivity, loading, loadError } = useProjects();
+  const { projects, currentUserId, friendships, globalActivity, loading, loadError, users, acceptFriendRequest } = useProjects();
 
-  // Derived stats
+ 
+  const pendingRequests = useMemo(() => {
+    return friendships
+      .filter(f => f.status === 'pending' && f.recipientId === currentUserId)
+      .map(f => {
+        const requester = users.find(u => u.id === f.requesterId);
+        return { ...f, requester };
+      })
+      .filter(r => r.requester);
+  }, [friendships, currentUserId, users]);
+
+
   const stats = useMemo(() => {
     const totalProjects = projects.length;
     const activeCheckouts = projects.filter(p => !p.isAvailable).length;
@@ -26,12 +36,12 @@ const HomePage = () => {
     const friendCount = friendships.filter(f => f.status === 'accepted' && (f.requesterId === currentUserId || f.recipientId === currentUserId)).length;
     const uniqueTags = new Set(projects.flatMap(p => p.hashtags || []));
     const tagCount = uniqueTags.size;
-    const messageCount = projects.reduce((acc,p) => acc + (Array.isArray(p.messages)? p.messages.length:0), 0); // if messages stored per project later
-    const activityCount = globalActivity.length; // total events
+    const messageCount = projects.reduce((acc,p) => acc + (Array.isArray(p.messages)? p.messages.length:0), 0); 
+    const activityCount = globalActivity.length;
     return { totalProjects, activeCheckouts, myCheckouts, friendCount, tagCount, messageCount, activityCount };
   }, [projects, currentUserId, friendships, globalActivity]);
 
-  // Show loading state
+ 
   if (loading) {
     return (
       <div className="min-h-screen bg-bg text-ink flex items-center justify-center">
@@ -43,7 +53,7 @@ const HomePage = () => {
     );
   }
 
-  // Show error state
+
   if (loadError) {
     return (
       <div className="min-h-screen bg-bg text-ink flex items-center justify-center">
@@ -66,7 +76,7 @@ const HomePage = () => {
     <div className="min-h-screen bg-bg text-ink">
       <Navbar />
       <main className="home-shell">
-        {/* Hero Section */}
+        {/*Hero Section */}
         <section className="home-hero">
           <div className="home-hero-header">
             <div className="home-hero-left">
@@ -75,37 +85,75 @@ const HomePage = () => {
               <div className="home-action-bar">
                 <button className="btn-primary new-project-btn" onClick={() => setIsCreateOpen(true)}>+ New Project</button>
               </div>
-              <div className="home-stat-row">
-                <div className="home-stat"><span className="home-stat-label">Projects</span><span className="home-stat-value">{stats.totalProjects}</span></div>
-                <div className="home-stat"><span className="home-stat-label">Checkouts</span><span className="home-stat-value">{stats.activeCheckouts}</span></div>
-                <div className="home-stat"><span className="home-stat-label">My Checked Out</span><span className="home-stat-value">{stats.myCheckouts}</span></div>
-                <div className="home-stat hidden sm:flex"><span className="home-stat-label">Friends</span><span className="home-stat-value">{stats.friendCount}</span></div>
-                <div className="home-stat hidden sm:flex"><span className="home-stat-label">Tags</span><span className="home-stat-value">{stats.tagCount}</span></div>
-                <div className="home-stat hidden sm:flex"><span className="home-stat-label">Activity</span><span className="home-stat-value">{stats.activityCount}</span></div>
-              </div>
             </div>
           </div>
         </section>
 
-        {/* Main Grid */}
+        {/*Search  */}
+        <div className="global-search-panel">
+          <div className="panel-section-header">
+            <h2 className="panel-section-title">Search Projects & Users</h2>
+          </div>
+          <div className="p-6">
+            <GlobalSearch />
+          </div>
+        </div>
+
+        {/* Main Grid.Projects left, Activity right */}
         <div className="home-grid">
+          {/* Projects */}
           <div className="home-col-main">
             <div className="project-feed-panel">
-              <div className="panel-section-header"><h2 className="panel-section-title">Projects</h2></div>
+              <div className="panel-section-header">
+                <h2 className="panel-section-title">Projects</h2>
+                <span className="text-xs text-neutral-500">Browse all projects</span>
+              </div>
               <ProjectFeed />
             </div>
-
-            <div className="activity-panel">
-              <div className="panel-section-header"><h2 className="panel-section-title">Recent Activity</h2></div>
-              <ActivityFeed />
-            </div>
           </div>
+
+          {/* Activity Feed & Friend Requests */}
           <div className="home-col-side">
-            <div className="global-search-panel">
-              <div className="panel-section-header"><h2 className="panel-section-title">Global Search</h2></div>
-              <div className="p-6">
-                <GlobalSearch />
+            {pendingRequests.length > 0 && (
+              <div className="panel mb-6">
+                <div className="panel-section-header">
+                  <h2 className="panel-section-title">Friend Requests</h2>
+                  <span className="text-xs bg-accent text-white px-2 py-1 rounded-full">{pendingRequests.length}</span>
+                </div>
+                <div className="p-4 space-y-3">
+                  {pendingRequests.map(request => (
+                    <div key={request.id} className="flex items-center justify-between p-3 bg-neutral-800 rounded-lg">
+                      <Link to={`/profile/${request.requester.id}`} className="flex items-center gap-3 flex-1">
+                        <div className="w-10 h-10 rounded-full bg-accent flex items-center justify-center text-white font-bold">
+                          {request.requester.profileImage ? (
+                            <img src={request.requester.profileImage} alt={request.requester.name} className="w-full h-full object-cover rounded-full" />
+                          ) : (
+                            request.requester.name.charAt(0)
+                          )}
+                        </div>
+                        <div>
+                          <p className="text-white font-medium">{request.requester.name}</p>
+                          <p className="text-neutral-400 text-xs">@{request.requester.username || request.requester.id}</p>
+                        </div>
+                      </Link>
+                      <button
+                        onClick={() => acceptFriendRequest(request.requesterId)}
+                        className="btn-primary text-xs px-3 py-1"
+                      >
+                        Accept
+                      </button>
+                    </div>
+                  ))}
+                </div>
               </div>
+            )}
+            
+            <div className="activity-panel">
+              <div className="panel-section-header">
+                <h2 className="panel-section-title">Recent Activity</h2>
+                <span className="text-xs text-neutral-500">Latest updates</span>
+              </div>
+              <ActivityFeed />
             </div>
           </div>
         </div>

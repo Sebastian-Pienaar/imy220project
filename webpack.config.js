@@ -28,6 +28,7 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       template: './frontend/public/index.html',
+      favicon: './frontend/public/favicon.svg',
     }),
     // Inject a minimal process.env so client code can safely read API_BASE.
     new webpack.DefinePlugin({

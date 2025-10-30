@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const { createRequest, acceptRequest, deleteFriendship, listForUser } = require('../repositories/friendshipRepo');
 
-// List all friendship edges (pending + accepted) for a user
 router.get('/user/:userId', async (req,res,next) => {
   try {
     const items = await listForUser(req.params.userId);
@@ -10,7 +9,7 @@ router.get('/user/:userId', async (req,res,next) => {
   } catch(e){ next(e);} 
 });
 
-// Create request
+//Create req
 router.post('/', async (req,res,next) => {
   try {
     const { requesterId, recipientId } = req.body;
@@ -20,7 +19,7 @@ router.post('/', async (req,res,next) => {
   } catch(e){ next(e);} 
 });
 
-// Accept request
+//Accept request
 router.patch('/:id/accept', async (req,res,next) => {
   try {
     const updated = await acceptRequest(req.params.id);
@@ -29,7 +28,7 @@ router.patch('/:id/accept', async (req,res,next) => {
   } catch(e){ next(e);} 
 });
 
-// Delete (unfriend or cancel)
+//Delete/cancle
 router.delete('/:id', async (req,res,next) => {
   try {
     await deleteFriendship(req.params.id);

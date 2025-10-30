@@ -3,10 +3,10 @@ const mongoose = require('mongoose');
 const CheckInSchema = new mongoose.Schema({
   userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
   message: { type: String, required: true },
-  // Make version optional so non-checkin events (checkout/return) can be stored without forcing a value.
+
   version: { type: String },
   addedFiles: [{ name: String, size: Number, mime: String }],
-  type: { type: String, enum: ['checkin','checkout','return'], default: 'checkin' },
+  type: { type: String, enum: ['checkin','checkout','return','creation','message'], default: 'checkin' },
   createdAt: { type: Date, default: Date.now }
 });
 
@@ -19,7 +19,7 @@ const ProjectSchema = new mongoose.Schema({
   hashtags: [{ type: String, index: true }],
   files: [{ name: String, size: Number, mime: String }],
   members: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
-  image: { type: String }, // base64 or CDN reference
+  image: { type: String }, 
   isAvailable: { type: Boolean, default: true },
   checkedOutBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User', default: null },
   activity: [CheckInSchema],
