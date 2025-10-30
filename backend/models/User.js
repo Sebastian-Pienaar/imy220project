@@ -9,6 +9,8 @@ const UserSchema = new mongoose.Schema({
   location: { type: String },
   bio: { type: String },
   languages: [{ type: String }],
+  profileImage: { type: String },
+  isAdmin: { type: Boolean, default: false },
   createdAt: { type: Date, default: Date.now }
 });
 

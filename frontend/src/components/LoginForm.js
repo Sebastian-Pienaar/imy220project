@@ -16,7 +16,7 @@ const LoginForm = ({ onSwitchToSignUp }) => {
     setError(null); setLoading(true);
     try {
       const user = await login(usernameOrEmail, password);
-      navigate(`/profile/${user.username}`);
+      navigate('/home');
     } catch(e){
       setError(e.message);
     } finally { setLoading(false); }
@@ -27,10 +27,18 @@ const LoginForm = ({ onSwitchToSignUp }) => {
       <div className="form-content">
         <h2>Login here</h2>
         <form onSubmit={handleSubmit}>
-          <div className="form-group"><label htmlFor="email">email</label><input type="email" id="email" name="email" required /></div>
-          <div className="form-group"><label htmlFor="password">password</label><input type="password" id="password" name="password" required /></div>
-          <button type="submit" className="register-btn" disabled={loading}>{loading ? '...' : 'login'}</button>
-          {error && <p className="validation-error" style={{marginTop:'8px'}}>{error}</p>}
+          <div className="form-group">
+            <label htmlFor="email">email</label>
+            <input type="email" id="email" name="email" required />
+          </div>
+          <div className="form-group">
+            <label htmlFor="password">password</label>
+            <input type="password" id="password" name="password" required />
+          </div>
+          {error && <p className="validation-error text-red-400 text-sm mt-2">{error}</p>}
+          <button type="submit" className="register-btn" disabled={loading}>
+            {loading ? '...' : 'login'}
+          </button>
         </form>
         <div className="form-switcher">
           <p>

@@ -7,7 +7,7 @@ import HomePage from './pages/HomePage';
 import ProjectPage from './pages/ProjectPage';
 import ProfilePage from './pages/ProfilePage';
 
-// All legacy page CSS migrated into Tailwind component layer.
+
 
 
 function App() {
@@ -19,7 +19,7 @@ function App() {
         <Route path="/" element={<SplashPage />} />
         <Route path="/home" element={<HomePage />} />
 
-        {/*Dynamic routes*/}
+        {/*dynamic routes*/}
         
         <Route path="/project/:projectId" element={<ProjectPage />} />
 

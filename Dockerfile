@@ -28,5 +28,5 @@ ENV PORT=8000
 HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
   CMD curl -f http://localhost:8000/api/health || exit 1
 
-# Start the production server (serves both frontend and backend)
-CMD ["node", "server-static.js"]
+# Start the unified server (serves both frontend and backend)
+CMD ["node", "backend/server.js"]

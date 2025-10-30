@@ -10,5 +10,6 @@ async function searchUsers(q) {
 }
 async function listUsers() { return User.find().limit(100); }
 async function updateUser(id, patch) { return User.findByIdAndUpdate(id, patch, { new: true }); }
+async function deleteUser(id) { return User.findByIdAndDelete(id); }
 
-module.exports = { createUser, getUserById, getUserByUsername, searchUsers, listUsers, updateUser };
+module.exports = { createUser, getUserById, getUserByUsername, searchUsers, listUsers, updateUser, deleteUser };

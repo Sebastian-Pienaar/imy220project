@@ -1,13 +1,5 @@
 import React from 'react';
 
-/**
- * Simple toast notification component (stub for Deliverable 1)
- * Props:
- * - message (string)
- * - variant (info|success|error) visual styling hook
- * - isVisible (boolean)
- * - onDismiss (function)
- */
 const Toast = ({ message = 'Action completed', variant = 'info', isVisible, onDismiss, autoHideMs = 2500 }) => {
   const timerRef = React.useRef();
   React.useEffect(() => {

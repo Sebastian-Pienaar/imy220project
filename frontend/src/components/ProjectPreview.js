@@ -1,29 +1,35 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useProjects } from '../context/ProjectsContext';
-import ProfilePopover from './ProfilePopover';
 import Hashtag from './Hashtag';
 
 const ProjectPreview = ({ project }) => {
   if (!project) return null;
   const { users } = useProjects();
-  const { id, _id, name, joinDate, isAvailable, checkedOutBy, ownerId, hashtags = [], type, version } = project;
-  const projectId = id || _id; // Handle both MongoDB ObjectId and regular ID
+  const { id, _id, name, isAvailable, checkedOutBy, ownerId, hashtags = [], image } = project;
+  const projectId = id || _id;
   const owner = users.find(u => u.id === ownerId || u._id === ownerId || u.mongoId === ownerId);
   return (
     <article className="preview-card" data-available={isAvailable} data-checkedout-by={checkedOutBy || ''}>
-      <div className="project-image">project image</div>
+      <div className="project-image">
+        {image ? (
+          <img src={image} alt={name} className="w-full h-full object-cover" />
+        ) : (
+          <span className="text-xs text-neutral-500">project image</span>
+        )}
+      </div>
       <div className="card-details">
+        <div className="card-info">
+          <h3 className="text-lg font-semibold text-white mb-1">{name}</h3>
+          {owner && (
+            <p className="text-sm text-neutral-400">
+              by <Link to={`/profile/${owner.id}`} className="owner-link hover:text-accent transition-colors">{owner.name}</Link>
+            </p>
+          )}
+        </div>
         <div className="card-status">
-          <span>
-            {name} • {type} v{version} • joined {joinDate} {owner && (
-              <>
-                • <ProfilePopover user={owner}><button type="button" className="owner-link" aria-label={`View owner ${owner.name}`}>{owner.name}</button></ProfilePopover>
-              </>
-            )}
-          </span>
           <span className="checkout-status">
-            {isAvailable ? '✅ available' : `🔒 by ${checkedOutBy}`}
+            {isAvailable ? '✅ available' : `🔒 ${checkedOutBy}`}
           </span>
         </div>
         {hashtags.length > 0 && (

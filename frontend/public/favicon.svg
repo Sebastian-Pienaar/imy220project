@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <!-- Background -->
+  <rect width="100" height="100" fill="#2d3748" rx="15"/>
+  
+  <!-- Bug body (orange) -->
+  <ellipse cx="50" cy="55" rx="20" ry="28" fill="#f59e0b"/>
+  
+  <!-- Bug head (orange) -->
+  <circle cx="50" cy="28" r="12" fill="#f59e0b"/>
+  
+  <!-- Bug stripes (darker orange) -->
+  <rect x="30" y="45" width="40" height="3" fill="#d97706" rx="1.5"/>
+  <rect x="30" y="55" width="40" height="3" fill="#d97706" rx="1.5"/>
+  <rect x="30" y="65" width="40" height="3" fill="#d97706" rx="1.5"/>
+  
+  <!-- Antennas (dark gray) -->
+  <line x1="45" y1="20" x2="40" y2="10" stroke="#1f2937" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="55" y1="20" x2="60" y2="10" stroke="#1f2937" stroke-width="2.5" stroke-linecap="round"/>
+  <circle cx="40" cy="10" r="2.5" fill="#1f2937"/>
+  <circle cx="60" cy="10" r="2.5" fill="#1f2937"/>
+  
+  <!-- Legs (dark gray) -->
+  <!-- Left legs -->
+  <line x1="30" y1="45" x2="18" y2="40" stroke="#1f2937" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="30" y1="55" x2="15" y2="55" stroke="#1f2937" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="30" y1="65" x2="18" y2="70" stroke="#1f2937" stroke-width="2.5" stroke-linecap="round"/>
+  
+  <!-- Right legs -->
+  <line x1="70" y1="45" x2="82" y2="40" stroke="#1f2937" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="70" y1="55" x2="85" y2="55" stroke="#1f2937" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="70" y1="65" x2="82" y2="70" stroke="#1f2937" stroke-width="2.5" stroke-linecap="round"/>
+  
+  <!-- Eyes (white) -->
+  <circle cx="45" cy="28" r="3" fill="#ffffff"/>
+  <circle cx="55" cy="28" r="3" fill="#ffffff"/>
+  
+  <!-- Pupils (dark) -->
+  <circle cx="45" cy="28" r="1.5" fill="#1f2937"/>
+  <circle cx="55" cy="28" r="1.5" fill="#1f2937"/>
+  
+  <!-- Code brackets (light gray) -->
+  <text x="10" y="90" font-family="monospace" font-size="24" fill="#9ca3af" font-weight="bold">{</text>
+  <text x="80" y="90" font-family="monospace" font-size="24" fill="#9ca3af" font-weight="bold">}</text>
+</svg>

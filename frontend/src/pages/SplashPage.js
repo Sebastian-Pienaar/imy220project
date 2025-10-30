@@ -6,7 +6,6 @@ import LoginForm from '../components/LoginForm';
 import Footer from '../components/Footer';
 
 const SplashPage = () => {
-  // 1. This state determines which form is visible. Defaults to 'true' (Login).
   const [isLoginView, setIsLoginView] = useState(true);
 
   return (
@@ -21,7 +20,7 @@ const SplashPage = () => {
           <div className="step"><h3>Step 3: Roll Back or Ship It</h3><p>Review changes, roll back bad fixes, or publish your bug-free build to the world.</p></div>
         </section>
         <aside className="registration-container">
-          {/* 2. This logic conditionally renders the correct form AND passes the correct function as a prop. */}
+          {/*conditionally render korrekte form EN pass correct function as prop*/}
           {isLoginView ? (
             <LoginForm onSwitchToSignUp={() => setIsLoginView(false)} />
           ) : (
