@@ -9,6 +9,3 @@ docker-compose up
 
 ## Stop the application
 docker-compose down
-
-##Visit
- http://localhost:8000
